@@ -54,20 +54,20 @@ interpreter (){
 	echo "Interpreter"
 	echo "$bulnum"
 
-	#svn co http://svn.radisys.com/svn/nmrf/mediaserver/branches/mediaserver_mrf$bulnum
+	#svn co http://svn..com/svn/nmrf/mediaserver/branches/mediaserver_mrf$bulnum
 }
 
 hbmr-imr (){
 	echo "HBMR/IMR"
 	echo "$bulnum"
-       #svn co http://svn.radisys.com/svn/nmrf/mediaserver/branches/mediaserver_mrf$bulnum
+       #svn co http://svn..com/svn/nmrf/mediaserver/branches/mediaserver_mrf$bulnum
 
 }
 
 mcdp (){
 	echo "MCDP"
 	echo "$bulnum"
-	#svn co http://svn.radisys.com/svn/nmrf/mediaserver/branches/mediaserver_mrf$bulnum
+	#svn co http://svn..com/svn/nmrf/mediaserver/branches/mediaserver_mrf$bulnum
 }
 
 weboam (){
@@ -80,7 +80,7 @@ if [ -d $weboam_branch ]; then
 else
 	echo "Going for svn checkout of $weboam_branch directory.."
 	sleep 5
-	svn co http://svn.radisys.com/svn/nmrf/weboam/branches/$weboam_branch
+	svn co http://svn..com/svn/nmrf/weboam/branches/$weboam_branch
 	cd $weboam_branch;
 fi
 if [ $?=0 ]; then
@@ -119,7 +119,7 @@ if [ -d $mpm_branch ]; then
 else
 	echo "Going for svn checkout of $mpm_branch directory.."
 	sleep 5 
-	svn co http://svn.radisys.com/svn/nmrf/mpm/branches/$mpm_branch
+	svn co http://svn..com/svn/nmrf/mpm/branches/$mpm_branch
 	 cd $mpm_branch;
 fi		
 if [ $?=0 ]; then
@@ -158,7 +158,7 @@ if [ -d $vxmlinterpreter_branch ]; then
 else
 	echo "Going for svn checkout of $vxmlinterpreter_branch directory.."
 	sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/VxmlInterpreter/branches/$vxmlinterpreter_branch
+        svn co http://svn..com/svn/nmrf/VxmlInterpreter/branches/$vxmlinterpreter_branch
 	cd $vxmlinterpreter_branch
 fi
 if [ $?=0 ]; then
@@ -188,7 +188,7 @@ if [ -d $annlab_branch ]; then
 else
 	echo "Going for svn checkout of $annlab_branch_branch directory.."
 	sleep 5
-    	svn co http://svn.radisys.com/svn/nmrf/annlab/branches/$annlab_branch
+    	svn co http://svn.s.com/svn/nmrf/annlab/branches/$annlab_branch
 	cd $annlab_branch
 fi
 if [ $?=0 ]; then
@@ -208,8 +208,9 @@ if [ -d $mi_cloud_branch ]; then
 	svn update
 else
 	echo "Going for svn checkout of $mi_cloud_branch directory.."
-	sleep 5
-	svn co http://svn.radisys.com/svn/nmrf/Cloud/branches/$mi_cloud_branch
+
+sleep 5
+	svn co http://svn..com/svn/nmrf/Cloud/branches/$mi_cloud_branch
    	cd $mi_cloud_branch
 fi
 if [ $?=0 ]; then
@@ -233,7 +234,7 @@ if [ -d $mi_sytemdelivery_branch ]; then
 else
         echo "Going for svn checkout of $mi_sytemdelivery_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch 
+        svn co http://svn..com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch 
 	cd $mi_sytemdelivery_branch
 fi
 if [ $?=0 ]; then
@@ -265,7 +266,7 @@ if [ -d $mi_mrfsqlbk_branch ]; then
 else
         echo "Going for svn checkout of $mi_mrfsqlbk_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/mrfsqlbk/branches/$mi_mrfsqlbk_branch 
+        svn co http://svn..com/svn/nmrf/mrfsqlbk/branches/$mi_mrfsqlbk_branch 
 	cd $mi_mrfsqlbk_branch
 fi
 if [ $?=0 ]; then
@@ -305,7 +306,7 @@ if [ -d $mi_cloud_branch ]; then
 else
         echo "Going for svn checkout of $mi_cloud_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/Cloud/branches/$mi_cloud_branch
+        svn co http://svn..com/svn/nmrf/Cloud/branches/$mi_cloud_branch
         cd $mi_cloud_branch
 fi
 if [ $?=0 ]; then
@@ -346,7 +347,7 @@ if [ -d $mi_mrfmaa_branch ]; then
 else
         echo "Going for svn checkout of $mi_mrfmaa_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/mrfmaa/branches/$mi_mrfmaa_branch 
+        svn co http://svn..com/svn/nmrf/mrfmaa/branches/$mi_mrfmaa_branch 
 	cd $mi_mrfmaa_branch
 fi
 if [ $?=0 ]; then
@@ -367,7 +368,7 @@ if [ -d $mi_sytemdelivery_branch ]; then
 else
         echo "Going for svn checkout of $mi_sytemdelivery_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch 
+        svn co http://svn..com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch 
 	cd $mi_sytemdelivery_branch
 fi
 if [ $?=0 ]; then
@@ -386,7 +387,7 @@ if [ -d $mi_sytemdelivery_branch ]; then
 else
         echo "Going for svn checkout of $mi_sytemdelivery_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch 
+        svn co http://svn..com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch 
 	cd $mi_sytemdelivery_branch
 fi
 if [ $?=0 ]; then
@@ -405,7 +406,7 @@ if [ -d $mi_sytemdelivery_branch ]; then
 else
         echo "Going for svn checkout of $mi_sytemdelivery_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch 
+        svn co http://svn..com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch 
 	cd $mi_sytemdelivery_branch
 fi
 if [ $?=0 ]; then
@@ -425,7 +426,7 @@ if [ -d $mi_cloud_branch ]; then
 else
         echo "Going for svn checkout of $mi_cloud_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/Cloud/branches/$mi_cloud_branch
+        svn co http://svn..com/svn/nmrf/Cloud/branches/$mi_cloud_branch
         cd $mi_cloud_branch
 fi
 if [ $?=0 ]; then
@@ -446,7 +447,7 @@ if [ -d $mi_healthcheck_branch ]; then
 else
         echo "Going for svn checkout of $mi_healthcheck_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/healthcheck/branches/$mi_healthcheck_branch
+        svn co http://svn..com/svn/nmrf/healthcheck/branches/$mi_healthcheck_branch
         cd $mi_healthcheck_branch
 fi
 if [ $?=0 ]; then
@@ -467,7 +468,7 @@ if [ -d $mi_sytemdelivery_branch ]; then
 else
         echo "Going for svn checkout of $mi_sytemdelivery_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch
+        svn co http://svn..com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch
 	cd $mi_sytemdelivery_branch
 fi
 if [ $?=0 ]; then
@@ -488,7 +489,7 @@ if [ -d $mi_sytemdelivery_branch ]; then
 else
         echo "Going for svn checkout of $mi_sytemdelivery_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch
+        svn co http://svn..com/svn/nmrf/sytem-delivery/branches/$mi_sytemdelivery_branch
         cd $mi_sytemdelivery_branch
 fi
 if [ $?=0 ]; then
@@ -510,7 +511,7 @@ if [ -d $mi_httpconf_branch ]; then
 else
         echo "Going for svn checkout of $mi_httpconf_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/http-conf/branches/$mi_httpconf_branch
+        svn co http://svn..com/svn/nmrf/http-conf/branches/$mi_httpconf_branch
         cd $mi_httpconf_branch
 fi
 if [ $?=0 ]; then
@@ -531,7 +532,7 @@ if [ -d $mi_initmrf_branch ]; then
 else
         echo "Going for svn checkout of $mi_initmrf_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/Init_MRF/branches/$mi_initmrf_branch
+        svn co http://svn..com/svn/nmrf/Init_MRF/branches/$mi_initmrf_branch
 	cd $mi_initmrf_branch
 fi
 if [ $?=0 ]; then
@@ -572,7 +573,7 @@ if [ -d $mi_drbd_branch ]; then
 else
         echo "Going for svn checkout of $mi_drbd_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/drbd/branches/$mi_drbd_branch
+        svn co http://svn..com/svn/nmrf/drbd/branches/$mi_drbd_branch
 	cd $mi_drbd_branch
 fi
 if [ $?=0 ]; then
@@ -596,7 +597,7 @@ if [ -d $mi_checkhostsconfigfile_branch ]; then
 else
      	echo "Going for svn checkout of $mi_checkhostsconfigfile_branch directory.."
     	sleep 5
-     	svn co http://svn.radisys.com/svn/nmrf/CheckHostsConfigFile/branches/$mi_checkhostsconfigfile_branch 
+     	svn co http://svn..com/svn/nmrf/CheckHostsConfigFile/branches/$mi_checkhostsconfigfile_branch 
   	cd $mi_checkhostsconfigfile_branch
 fi
 if [ $?=0 ]; then
@@ -617,7 +618,7 @@ if [ -d $mi_bulkconfigurationtool_branch ]; then
 else
     	echo "Going for svn checkout of $mi_bulkconfigurationtool_branch directory.."
    	sleep 5
-   	svn co http://svn.radisys.com/svn/nmrf/BulkConfigurationTool/branches/$mi_bulkconfigurationtool_branch
+   	svn co http://svn..com/svn/nmrf/BulkConfigurationTool/branches/$mi_bulkconfigurationtool_branch
      	cd $mi_bulkconfigurationtool_branch
 fi
 if [ $?=0 ]; then
