@@ -1,0 +1,5 @@
+workspace=`pwd`
+echo $workspace > workspace
+WORKSPACE=$( sed -e 's/[\/&]/\\&/g' workspace )
+rm -rf workspace
+sed -ie "s/workspace/$WORKSPACE/g" build.properties
