@@ -1,0 +1,20 @@
+SUITES.1 Pipeline                                                     | PASS |
+9 critical tests, 9 passed, 0 failed
+9 tests total, 9 passed, 0 failed
+-----------------------------------------------------------------------------------------------------
+SUITES.2 Logical ports IPv4                                           | FAIL |
+21 critical tests, 19 passed, 2 failed
+21 tests total, 19 passed, 2 failed
+-----------------------------------------------------------------------------------------------------
+SUITES.2 Logical ports IPv6                                           | FAIL |
+7 critical tests, 4 passed, 3 failed
+7 tests total, 4 passed, 3 failed
+-----------------------------------------------------------------------------------------------------
+SUITES.4 Sfc Basic                                                    | FAIL |
+29 critical tests, 16 passed, 13 failed
+29 tests total, 16 passed, 13 failed
+-----------------------------------------------------------------------------------------------------
+SUITES :: This suite contains all sanity test cases from all modules. | FAIL |
+66 critical tests, 48 passed, 18 failed
+66 tests total, 48 passed, 18 failed
+-----------------------------------------------------------------------------------------------------
