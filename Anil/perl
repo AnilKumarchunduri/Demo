@@ -1,0 +1,290 @@
+#!/usr/bin/perl
+use MIME::Lite;
+use Net::SMTP;
+use Time::Piece;
+use Time::Seconds;
+#use warnings;
+my $mail_host = 'webmail.radisys.com';
+my $path = "/home/dvs/cq_files/script/notify/logfile/";
+my $ciddetails =  "/home/dvs/cq_files/script/notify/logfile/cid.details.txt";
+`/bin/rm /home/dvs/cq_files/script/notify/logfile/*`;
+open (FILE, "/home/dvs/cq_files/script/notify/cid.list") or die "Can't open FILE\n";
+
+@cid_list = <FILE>;
+
+chomp($sysdate = `date '+%d-%b-%Y'`);
+#chmop($weeklydate = $sysdate - 7)
+#$epco = time();
+#$week = $epco - 7 * 24 * 60 * 60 ;
+#@months = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
+#($second, $minute, $hour, $dayOfMonth, $month, $yearOffset, $dayOfWeek, $dayOfYear, $daylightSavings) = localtime($week);
+#$year = 1900 + $yearOffset;
+#$theTime = "$dayOfMonth-$months[$month]-$year";
+#chomp($theTime);
+my $t = localtime() - ONE_WEEK;
+my $date = $t->day_of_month;
+my $month = $t->monname;
+my $year = $t->year;
+my $Lweek_date = "$date-$month-$year";
+chomp($Lweek_date);
+
+close (FILE);
+foreach (@cid_list){
+#next if ($_ =~ s/ //g);
+chomp $_;
+@cid_in = split('#',$_);
+$new = "@123";
+$cid = @cid_in[0];
+$start_date = @cid_in[1];
+my $company_name = @cid_in[2];
+#chomp($email_act = @cid_in[3]);
+$ticket_allowed= @cid_in[3];
+$total_hours= @cid_in[4];
+$enddate = @cid_in[5];
+my $cidfile = "$path/$cid\_list.sql"; 
+my $statusfile = "$path/$cid\_status.sql";
+open (SQLFILE, ">$cidfile") || die "Cannot write to file $!";
+open (SQLFILE2, ">$statusfile") || die "Cannot write to file $!";
+my $sqlstring = "spool on
+		 set und on
+                 spool /home/dvs/cq_files/script/notify/logfile/$cid.txt
+select T6.login_name, count(*) as Total_Tickets from Defect T1,project T15,statedef T3,users T6 where T1.project = T15.dbid and T1.state = T3.id and T1.submitter = T6.dbid and (T1.dbid <> 0 and ((T6.login_name = '$cid' and T1.submit_date between ('$start_date') and ('$sysdate'))))
+group by T6.login_name
+/
+select sum(T1.TimeSpent) as Total_time_in_mins from Defect T1,project T15,statedef T3,users T6 where T1.project = T15.dbid and T1.state = T3.id and T1.submitter = T6.dbid and (T1.dbid <> 0 and ((T6.login_name = '$cid' and T1.submit_date between ('$start_date') and ('$sysdate'))))
+group by T6.login_name
+/
+select sum(T1.TimeSpent) as Total_time_in_mins from Defect T1,project T15,statedef T3,users T6 where T1.project = T15.dbid and T1.state = T3.id and T1.submitter = T6.dbid and (T1.dbid <> 0 and ((T6.login_name = '$cid' and T1.submit_date between ('$start_date') and ('$Lweek_date'))))
+group by T6.login_name
+/";
+my $sqlstring2 = "spool on
+                  set und on
+		 spool /home/dvs/cq_files/script/notify/logfile/$cid.status.txt
+select distinct T1.status from contractdetail T1,contract_2 T2,site T3 where T1.contract_num = T2.dbid and T2.cid = T3.dbid and (T1.dbid <> 0 and ((T3.cid = '$cid')))
+/";
+print SQLFILE $sqlstring;
+print SQLFILE2 $sqlstring2;
+$result = system("/u01/app/oracle/product/11.2.0/db_1/bin/sqlplus -S ccpu/ccpu882\@oralnx < $cidfile");
+$CIDStatus = system("/u01/app/oracle/product/11.2.0/db_1/bin/sqlplus -S ccpu/ccpu882\@oralnx < $statusfile");
+close SQLFILE;
+close SQLFILE2;
+open (FILE1, "/home/dvs/cq_files/script/notify/logfile/$cid\.txt") or die "Can not  open FILE\n";
+@filedata = <FILE1>;
+close FILE1;
+$filedata[3] =~ s/ //g;
+$filedata[8] =~ s/ //g;
+$filedata[13] =~ s/ //g;
+my $email_send = $email_act;
+$total_minutes = $filedata[8];
+$total_min = $filedata[13];
+@tot_tickets = split(/$cid/,$filedata[3]);
+$total_loggedtickets = $tot_tickets[1];
+#Convert minutes in hours
+my $flag = 0;
+my $hour;
+my $Lhour;
+if ($total_minutes >60)
+{
+	$hours = $total_minutes/60;
+	@splithoursmin = split ('\.', $hours);
+	$hour = $splithoursmin[0];
+}
+if ($total_minutes < 60)
+{
+	$hours = $total_minutes/60;
+	#$hour = $hours;
+	$hour = substr $hours, 0, 4 ;
+}
+if ($total_loggedtickets eq "" && $total_minutes eq "")
+{
+        $hour = "00";
+        $total_loggedtickets = "N/A";
+}
+##converting minutes to hours for lastweek date
+if ($total_min >60)
+{
+        $hours2 = $total_min/60;
+        @splitmin = split ('\.', $hours2);
+        $Lhour = $splitmin[0];
+}
+if ($total_min < 60)
+{
+        $hours2 = $total_min/60;
+        #$hour = $hours;
+        $Lhour = substr $hours2, 0, 4 ;
+}
+if ($total_loggedtickets eq "" && $total_min eq "")
+{
+        $Lhour = "00";
+        $total_loggedtickets = "N/A";
+}
+$TWhours = $hour - $Lhour;
+#print "Lhour : $Lhour";
+#print "Thour : $hour";
+
+open (FILE2, "/home/dvs/cq_files/script/notify/logfile/$cid\.status.txt") or die "Can not  open FILE\n";
+my @cidstatus = <FILE2>;
+close FILE2;
+my @grepdata = grep (/^ACTIVE/, @cidstatus);
+my $cidstatus;
+if ($#grepdata eq -1)
+{
+	$cidstatus = "INACTIVE";
+}
+else 
+{
+	$cidstatus = "ACTIVE";
+}
+chomp $cidstatus;
+#Send mail if total number of tickets are greater than 90%, 100% and reminder for total number of ticktes
+chomp $cid;
+chomp $ticket_allowed;
+chomp $total_loggedtickets;
+chomp $hour;
+chomp $Lhour;
+chomp $total_hours;
+open (FH,"+>>$ciddetails") or die "can not open file $! \n";
+my $riskcount;
+my $flag;
+my $emailcheck;
+
+#IF customer purchased total number of hours.
+@hourssplit = split ('Hrs', $total_hours);
+my $totalnumhours = $hourssplit[0];
+$totalspenthours = $hour;
+my $remainhrs = $total_hours - $hour;
+	chomp $remainhrs;
+	if ($remainhrs > 20)
+	{
+		$riskcount = "normal";
+	}
+	if (($remainhrs > 10) && ($remainhrs < 20))
+        {
+                $riskcount = "min10";
+        }
+	if ($remainhrs <= 10)
+        {
+                $riskcount = "le10";
+        }
+	if ($total_hours eq  "--")
+        {
+                $riskcount = "normal";
+		$remainhrs = "--";
+        }
+
+print FH "$cid#$start_date#$company_name#$ticket_allowed#$total_loggedtickets#$total_hours#$hour#$remainhrs#$TWhours#$riskcount#$cidstatus#$enddate\n";
+close FH;
+}
+
+my $data="
+                <html>
+                <head>
+                <TITLE>Customers Total Tickets/Hours Count System</TITLE>
+
+                <meta http-equiv='imagetoolbar' content='no'>
+                <META HTTP-EQUIV='content-type' CONTENT='text/html; charset=utf-8'>
+                <LINK REL='stylesheet' HREF='https://patchmanager.ccpu.com/gif/style-screen.css' TYPE='text/css' MEDIA='screen'>
+                <LINK REL='stylesheet' HREF='https://patchmanager.ccpu.com/gif/style-print.css' TYPE='text/css' MEDIA='print'>
+                <body>
+                <h2 align=center><u>Customers Total Tickets/Hours Count System</u></h2>
+		<br><br>
+                <table border=1 bgcolor=#BDB76B>
+		<tr><td width=80 bgcolor=#FFFF00></td><td><b>Remaining Hours > 10 and < 20 </i></b></td></tr>
+		<tr><td width=80 bgcolor=#FF0000></td><td><b>Remaining Hours < 10 </i></b></td></tr>
+                </table>
+		<br>
+		<br>
+                <table border=2>
+                <col align=center/>
+                <tr height = 35 bgcolor=#BDB76B><th>Customer CID</th><th>Purchased Date</th><th>Maint. End Date</th><th>Customer Name</th><th>Purchased Support(Tickets)</th><th>Submitted Tickets</th><th>Purchased Support(Hours)</th><th>Hours Spent</th><th>Hours Spent This Week</th><th>Remaining Hours</th><th>Status</th></tr>";
+
+my ($cidref,$startref,$companynameref,$purchasedticketsref,$submitticketsref,$purchasehrsref,$hrsspentref,$remainhrsref,$Twhoursref,$riskref,$flagref,$cidstatus,$endref) = parseStatusFile();
+		my @custcid = @$cidref;	
+		my @startdate = @$startref;
+		my @companyname = @$companynameref;
+		my @purtickets = @$purchasedticketsref;
+		my @subtickets = @$submitticketsref;
+		my @purhrs = @$purchasehrsref;
+		my @hrsspent = @$hrsspentref;
+		my @remainhr = @$remainhrsref;
+		my @Twhours = @$Twhoursref;
+		my @riskdet = @$riskref;
+		my @flagref = @$flagref;
+		my @cidstatus = @$cidstatus;
+		my @enddate = @$endref;
+		
+		#+++++++++++++++++++++++++++++
+		#print "@custcid \n";
+		#print "@companyname";
+		#print "@purtickets \n";
+		#print "@subtickets \n";
+		#print "@purhrs \n";
+		#print "@hrsspent \n";
+		#print "@riskdet \n";
+		#print "@flagref \n";
+		#+++++++++++++++++++++++++++++
+
+		createHtml();
+		$data=$data."</table></div><br><br><p><i>NOTE: This is an auto generated e-mail.</i></p></body></html>";
+		my $subject = "Customers purchased Total Tickets/Hours Report";
+		my $email;
+		#$email = "CD_Shipping\@radisys.com";
+		#my $ccEmail = "releasedept\@radisys.com,Raj.kumar\@radisys.comi,Vikram.Korde\@radisys.com";	
+		#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		#For Testing
+		my $email = "SaiAnil.Kumar\@radisys.com";
+		my $ccEmail = "SaiAnil.Kumar\@radisys.com";
+		#my $ccEmail = "Raj.kumar\@radisys.com";
+		#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
+		my $msg = MIME::Lite->new
+        	(
+                	Subject => "$subject",
+                	From    => 'releasedept@radisys.com',
+                	To      => $email,
+                	Cc      => $ccEmail,
+                	Type    => 'text/html',
+                	Data    => "$data"
+        	) or die "Error creating multipart container: $!\n";
+        	$msg->send('smtp',$mail_host, Timeout=>60);	
+sub parseStatusFile()
+{
+	open (FH, "<$ciddetails") or die "Cannot Open $ciddetails File $! \n";
+	my @filedata = <FH>;
+	close FH;
+	my (@custcids,@startdt,@companynamelist,@purchasedtickets,@submittickets,@purchasehrs,@hrsspent,@remainhour,@Twhours,@risk,@cidstatus,@enddate);
+	foreach (@filedata)
+	{
+		my ($cids,$startdt,$companynamelist,$purtickets,$subtickets,$purhrs,$hrspent,$remainhr,$Twhours,$riskdetails,$cidstatus,$enddt) = split (/#/,$_);
+		chomp ($cids,$startdt,$companynamelist,$purtickets,$subtickets,$purhrs,$hrspent,$remainhr,$Twhours,$riskdetails,$cidstatus,$enddt);
+		push (@custcids,$cids); push (@startdt,$startdt); push (@companynamelist,$companynamelist); push (@purchasedtickets,$purtickets); push (@submittickets,$subtickets); push (@purchasehrs,$purhrs);  push (@hrsspent,$hrspent); push (@remainhour,$remainhr); push (@Twhours,$Twhours); push (@risk,$riskdetails);push (@cidstatus,$cidstatus); push (@enddt,$enddt);
+	}
+	return (\@custcids,\@startdt,\@companynamelist,\@purchasedtickets,\@submittickets,\@purchasehrs,\@hrsspent,\@remainhour,\@Twhours,\@risk,\@flag,\@cidstatus,\@enddt);	
+}
+
+sub createHtml
+{
+        for(my $i =0;$i<=$#custcid;$i++)
+        {
+		chomp $cidstatus[$i];
+		next if ($cidstatus[$i] eq "INACTIVE");
+		if ($riskdet[$i] =~/normal/)
+		{
+		$data=$data."<tr><td width=140 align=center><b>$custcid[$i]</td><td width=140 align=center><b>$startdate[$i]</td><td width=140 align=center><b>$enddate[$i]</td><td width=200 align=center><b>$companyname[$i]</td><td width=160 align=center><b>$purtickets[$i]</td><td width=160 align=center><b>$subtickets[$i]</td><td width=160 align=center><b>$purhrs[$i]</td><td width=130 align=center><b>$hrsspent[$i]</td><td width=130 align=center><b>$Twhours[$i]</td><td width=130 align=center><b>$remainhr[$i]</td><td width=130 align=center><b>$cidstatus[$i]</td></tr>";
+		}
+		if ($riskdet[$i] =~/min10/)
+		{
+		$data=$data."<tr><td width=140 align=center><b>$custcid[$i]</td><td width=140 align=center><b>$startdate[$i]</td><td width=140 align=center><b>$enddate[$i]</td><td width=200 align=center><b>$companyname[$i]</td><td width=160 align=center><b>$purtickets[$i]</td><td width=160 align=center><b>$subtickets[$i]</td><td width=160 align=center><b>$purhrs[$i]</td><td width=130 align=center><b>$hrsspent[$i]</td><td width=130 align=center><b>$Twhours[$i]</td><td width=130 align=center bgcolor=#FFFF00><b>$remainhr[$i]</td><td width=130 align=center><b>$cidstatus[$i]</td></tr>";
+		}
+		if ($riskdet[$i] =~/le10/)
+		{
+		$data=$data."<tr><td width=140 align=center><b>$custcid[$i]</td><td width=140 align=center><b>$startdate[$i]</td><td width=140 align=center><b>$enddate[$i]</td><td width=200 align=center><b>$companyname[$i]</td><td width=160 align=center><b>$purtickets[$i]</td><td width=160 align=center><b>$subtickets[$i]</td><td width=160 align=center><b>$purhrs[$i]</td><td width=130 align=center><b>$hrsspent[$i]</td><td width=130 align=center><b>$Twhours[$i]</td><td width=130 align=center bgcolor=#FF0000><b>$remainhr[$i]</td><td width=130 align=center><b>$cidstatus[$i]</td></tr>";	
+		}
+
+		if ($riskdet[$i]  =~/min10/ || $riskdet[$i]  =~/le10/)
+		{
+			$emailcheck = 1;
+		}
+        }
+
+}

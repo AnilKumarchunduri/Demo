@@ -1,0 +1,12 @@
+{
+       "fields": {
+        "resolution": {
+            "name": "Fixed"
+        }
+    },
+    "transition": {
+        "id": "111"
+    }
+}
+
+

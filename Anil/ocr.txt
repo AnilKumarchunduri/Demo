@@ -1,0 +1,23 @@
+aaa https://github.com/opencord/aaa.git ssh://git@stash.radisys.com:7999/opcord/aaa.git
+config https://github.com/opencord/config.git ssh://git@stash.radisys.com:7999/opcord/config.git
+cord https://github.com/opencord/cord.gitssh://git@stash.radisys.com:7999/opcord/cord.git
+fabric https://github.com/opencord/fabric.git ssh://git@stash.radisys.com:7999/opcord/fabric.git
+globalxos https://github.com/opencord/globalxos.git ssh://git@stash.radisys.com:7999/opcord/globalxos.git
+igmp https://github.com/opencord/igmp.git ssh://git@stash.radisys.com:7999/opcord/igmp.git
+mcast https://github.com/opencord/mcast.git ssh://git@stash.radisys.com:7999/opcord/mcast.git
+ng-xos-lib https://github.com/opencord/ng-xos-lib.git ssh://git@stash.radisys.com:7999/opcord/ng-xos-lib.git
+olt https://github.com/opencord/olt.git ssh://git@stash.radisys.com:7999/opcord/olt.git
+onos-service https://github.com/opencord/onos-service.git ssh://git@stash.radisys.com:7999/opcord/onos-service.git
+openstack https://github.com/opencord/openstack.git ssh://git@stash.radisys.com:7999/opcord/openstack.git
+platform-install https://github.com/opencord/platform-install.git ssh://git@stash.radisys.com:7999/opcord/platform-install.git
+service-profile https://github.com/opencord/service-profile.git ssh://git@stash.radisys.com:7999/opcord/service-profile.git
+vBBU https://github.com/opencord/vBBU.git ssh://git@stash.radisys.com:7999/opcord/vbbu.git
+vMME https://github.com/opencord/vMME.git ssh://git@stash.radisys.com:7999/opcord/vmme.git
+voltha https://github.com/opencord/voltha.git ssh://git@stash.radisys.com:7999/opcord/voltha.git
+vrouter https://github.com/opencord/vrouter.git ssh://git@stash.radisys.com:7999/opcord/vrouter.git
+vsg https://github.com/opencord/vsg.git ssh://git@stash.radisys.com:7999/opcord/vsg.git
+vtn https://github.com/opencord/vtn.git ssh://git@stash.radisys.com:7999/opcord/vtn.git
+vtr https://github.com/opencord/vtr.git ssh://git@stash.radisys.com:7999/opcord/vtr.git
+xos https://github.com/opencord/xos.git ssh://git@stash.radisys.com:7999/opcord/xos.git
+xos-gui https://github.com/opencord/xos-gui.git ssh://git@stash.radisys.com:7999/opcord/xos-gui.git
+xos-rest-gw https://github.com/opencord/xos-rest-gw.git ssh://git@stash.radisys.com:7999/opcord/xos-rest-gw.git

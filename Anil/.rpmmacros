@@ -1,0 +1,4 @@
+%_var %(echo $WORKDIR)/build/RPM/var
+%_usr %(echo $WORKDIR)/build/RPM/usr
+%_topdir %(echo $WORKDIR)/build/RPM/usr/src/redhat
+%_builddir %(echo $WORKDIR)/build/RPM

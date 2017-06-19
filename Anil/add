@@ -1,0 +1,12 @@
+#!/bin/bash
+read x
+sum=0
+for(( i=1;i <= $x; i++ ))
+do
+read y
+sum=`expr $sum + $y`
+done
+echo $sum
+#res=`expr $sum / $x`
+#printf '%.3f'$(echo "scale=3;$res"|bc)
+echo` calc $sum/$x`

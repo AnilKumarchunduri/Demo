@@ -1,0 +1,13 @@
+HTTP/1.1 400 
+Server: nginx/1.6.3
+Date: Wed, 24 May 2017 05:37:35 GMT
+Content-Type: application/json;charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-AREQUESTID: 667x7489x1
+X-ASEN: SEN-L8874056
+Set-Cookie: atlassian.xsrf.token=BDDI-RQZB-HXK6-HBEP|562a748fa87b222d96cc7b7a40bc232e4e106b04|lout;path=/jira
+X-AUSERNAME: anonymous
+Cache-Control: no-cache, no-store, no-transform
+X-Content-Type-Options: nosniff
+

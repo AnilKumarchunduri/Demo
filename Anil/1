@@ -1,0 +1,9 @@
+#!/usr/bin/perl
+
+use Time::Piece;
+use Time::Seconds;
+
+my $t = localtime() - ONE_WEEK;
+my $sevenDaysbak = $t->ymd;
+print "$sevenDaysbak \n"; 
+
