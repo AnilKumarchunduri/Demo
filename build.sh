@@ -30,7 +30,7 @@ if  [ ${BRANCH_NAME} == trunk ]; then
 		svn update
         echo "test1"
 	else
-		svn co http://svn.radisys.com/svn/nmrf/${COMPONENT_NAME}/trunk --username jenkins ${WORKSPACE}/${COMPONENT_NAME}/${BRANCH_NAME}
+		svn co http:///svn/nmrf/${COMPONENT_NAME}/trunk --username jenkins ${WORKSPACE}/${COMPONENT_NAME}/${BRANCH_NAME}
 		cd  ${WORKSPACE}/${COMPONENT_NAME}/
         chmod -R 777 ${BRANCH_NAME}
         cd ${BRANCH_NAME}
@@ -42,7 +42,7 @@ else
 		svn update
         echo "test3"
 	else
-		svn co http://svn.radisys.com/svn/nmrf/${COMPONENT_NAME}/branches/${COMP}_mrf${BRANCH_NAME} --username jenkins ${WORKSPACE}/${COMPONENT_NAME}/${BRANCH_NAME}
+		svn co http://svn..com/svn/nmrf/${COMPONENT_NAME}/branches/${COMP}_mrf${BRANCH_NAME} --username jenkins ${WORKSPACE}/${COMPONENT_NAME}/${BRANCH_NAME}
         cd  ${WORKSPACE}/${COMPONENT_NAME}/
         chmod -R 777 ${BRANCH_NAME}
 		cd ${BRANCH_NAME}
