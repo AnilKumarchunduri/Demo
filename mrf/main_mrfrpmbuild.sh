@@ -286,7 +286,7 @@ if [ -d $mi_smartdhook_branch ]; then
 else
         echo "Going for svn checkout of $mi_smartdhook_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/smartdHook/branches/$mi_smartdhook_branch 
+        svn co http://svn..com/svn/nmrf/smartdHook/branches/$mi_smartdhook_branch 
 	cd $mi_smartdhook_branch
 fi
 if [ $?=0 ]; then
@@ -327,7 +327,7 @@ if [ -d $weboam_branch ]; then
 else
         echo "Going for svn checkout of $weboam_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/weboam/branches/$weboam_branch
+        svn co http://svn..com/svn/nmrf/weboam/branches/$weboam_branch
 	cd $weboam_branch
 fi
 if [ $?=0 ]; then
