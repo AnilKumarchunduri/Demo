@@ -552,7 +552,7 @@ if [ -d $mi_dri_mrf_branch ]; then
 else
         echo "Going for svn checkout of $mi_dri_mrf_branch directory.."
         sleep 5
-        svn co http://svn.radisys.com/svn/nmrf/DRI/branches/$mi_dri_mrf_branch
+        svn co http://svn..com/svn/nmrf/DRI/branches/$mi_dri_mrf_branch
 	cd $mi_dri_mrf_branch
 fi
 if [ $?=0 ]; then
